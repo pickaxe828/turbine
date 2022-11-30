@@ -1,23 +1,25 @@
-use std::{fs, iter::Map, collections::HashMap};
+use std::{fs};
 use toml;
-use serde::*;
 mod config_parse;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect::<Vec<_>>();
     if args.len() > 1 {
-        println!("omg")
+        // preserved for future use
+        println!("Arguments detected.")
     }
 
+    // Read config file
     let config_raw = fs::read_to_string("./config.turbine.toml").unwrap();
     let config: config_parse::Config = toml::from_str(&config_raw).unwrap();
 
-    let instructions = config.rules;
-    
-    println!("{:?}", instructions);
+    let rules = config.rules;
 
-    let input = String::from(config.input["input"].as_str().unwrap());
-    for i in String::from(input).chars() {
-        println!("{:?}", i);
+    let input = format!("00{}00", String::from(rules["input"].as_str().unwrap()));
+    let mut output: Vec<&String> = Vec::new();
+    for i in 0..input.len()-2 {
+        let instruction = &input[i..i+3];
+        let out = rules[instruction].to_string();
+        output.push(&out);
     }
 }

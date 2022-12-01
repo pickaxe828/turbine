@@ -14,12 +14,12 @@ fn main() {
     let config: config_parse::Config = toml::from_str(&config_raw).unwrap();
 
     let rules = config.rules;
-
-    let input = format!("00{}00", String::from(rules["input"].as_str().unwrap()));
-    let mut output: Vec<&String> = Vec::new();
+    let input = config.input;
+    
+    let mut output: Vec<String> = Vec::new();
     for i in 0..input.len()-2 {
-        let instruction = &input[i..i+3];
+        let instruction = &input[&(i..i+3)];
         let out = rules[instruction].to_string();
-        output.push(&out);
+        output.push(out);
     }
 }

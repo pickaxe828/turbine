@@ -1,9 +1,10 @@
-use std::{fs, collections::HashMap};
+use std::fs;
 use toml::{self, Value};
 use std::{thread, time::Duration};
 
 mod config_parse;
 
+// Eats 0s and 1s and poops out squares
 fn text_to_squares(input: &String) -> String {
     input.replace("0", "  ").replace("1", "██")
 }
@@ -11,7 +12,7 @@ fn text_to_squares(input: &String) -> String {
 fn main() {
     let args: Vec<String> = std::env::args().collect::<Vec<_>>();
     if args.len() > 1 {
-        // preserved for future use
+        // Preserved for future use
         println!("Arguments detected.")
     }
 
@@ -25,17 +26,18 @@ fn main() {
 
     let reader_width = behaviour.get("reader_width").unwrap().as_integer().unwrap() as usize;
     
-    // check if all the tape, rules and the reader is valid
+    // Check if all the tape, rules and the reader is valid. More tests should be added
     if reader_width > input.chars().count() {
         panic!("Reader width is larger than the tape length.");
     }
 
-    // how stuff begins
+    // How stuff begins
     // **Mechanical Squeaking noise**
+    // **Propeller whirring sound**
     println!("{}", text_to_squares(&input));
     loop {
         let mut result: Vec<String> = Vec::new();
-        input.chars().into_iter().enumerate().for_each(|(ind, val)| {
+        input.chars().into_iter().enumerate().for_each(|(ind, _val)| {
             if ind < (input.chars().count() - reader_width + 1) {
                 result.push(rules.get(&input.get(ind..ind + reader_width).unwrap().to_string()).unwrap().to_string());
             }

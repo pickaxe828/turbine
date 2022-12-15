@@ -1,10 +1,12 @@
 [input]
 # Default:
 # "110100001001000100000100000011"
-tape = "110100001001000100000100000011" 
+
+# Add 0s to the start/ end as padding to increase the canva size.
+tape = "110100001001000100000100000011"
 
 [behaviour]
-output_iterations = "all" # "all" | "result"
+output_iterations = "all" # "all" | "result" for future or an eternality
 reader_width = 3
 
 [rules] # Default: Rule 110
